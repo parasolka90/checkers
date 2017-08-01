@@ -11,7 +11,7 @@ public class CheckersApplication {
 
 		Pawn white = new Pawn("W");
 		Pawn black = new Pawn("B");
-		Board board = new Board();
+		Board board = new Board(10);
 		board.setFigure(white, 5, 6);
 		board.setFigure(black, 9, 7);
 		board.setFigure(white, 6, 2);
@@ -19,7 +19,6 @@ public class CheckersApplication {
 		board.setFigure(black, 4, 9);
 		board.setFigure(black,4,5);
 		board.printBoard();
-
 		board.move(5,6,4,5);
 		System.out.println();
 		board.printBoard();
