@@ -16,7 +16,7 @@ public class Board {
     }
 
     public Board(int size) {
-        this.size=size;
+        this.size = size;
         this.board = new ArrayList<>();
         for (int i = 0; i < size; i++) {
             ArrayList<String> board1 = new ArrayList<String>();
@@ -42,21 +42,22 @@ public class Board {
         if (checkMove(x0, y0, x1, y1) == false) {
             return false;
         }
-        //String p=getFigure(x0,y0);
-        setFigure(new Pawn("_"), x0, y0);
-        setFigure(new Pawn(p), x1, y1);
-        return true;
+        if (getFigure(x1, y1) != "_") {
+            return hit(x0, y0, x1, y1);
+        } else {
+            //String p=getFigure(x0,y0);
+            setFigure(new Pawn("_"), x0, y0);
+            setFigure(new Pawn(p), x1, y1);
+            return true;
+        }
     }
 
     public boolean checkMove(int x0, int y0, int x1, int y1) {
         //checking if y1 and x1 is valid
-        if(x1<0 ||x1>size){
+        if (x1 < 0 || x1 > size) {
             return false;
         }
-        if(y1<0 || y1>size){
-            return false;
-        }
-        if (getFigure(x1, y1) != "_") {
+        if (y1 < 0 || y1 > size) {
             return false;
         }
         //White goes up
@@ -77,5 +78,35 @@ public class Board {
 
         return false;
     }
+
+    public boolean hit(int x0, int y0, int x1, int y1) {
+        String beatingPawn = getFigure(x0, y0);
+        String beatenPawn = getFigure(x1, y1);
+        if (beatingPawn == "B" && beatenPawn == "W" || beatingPawn == "W" && beatenPawn == "B") {
+            if (x0 + 1 == x1 && y0 - 1 == y1 && getFigure(x0 + 2, y0 - 2) == "_") {
+                setFigure(new Pawn("_"), x0, y0);
+                setFigure(new Pawn("_"), x1, y1);
+                setFigure(new Pawn(beatingPawn), x0 + 2, y0 - 2);
+                return true;
+            } else if (x0 - 1 == x1 && y0 - 1 == y1 && getFigure(x0 - 2, y0 - 2) == "_") {
+                setFigure(new Pawn("_"), x0, y0);
+                setFigure(new Pawn("_"), x1, y1);
+                setFigure(new Pawn(beatingPawn), x0 - 2, y0 - 2);
+                return true;
+            } else if (x0 + 1 == x1 && y0 + 1 == y1 && getFigure(x0 + 2, y0 + 2) == "_") {
+                setFigure(new Pawn("_"), x0, y0);
+                setFigure(new Pawn("_"), x1, y1);
+                setFigure(new Pawn(beatingPawn), x0 + 2, y0 + 2);
+                return true;
+            } else if (x0 - 1 == x1 && y0 + 1 == y1 && getFigure(x0 - 2, y0 + 2) == "_") {
+                setFigure(new Pawn("_"), x0, y0);
+                setFigure(new Pawn("_"), x1, y1);
+                setFigure(new Pawn(beatingPawn), x0 - 2, y0 + 2);
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
 
