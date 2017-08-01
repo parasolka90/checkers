@@ -80,6 +80,12 @@ public class Board {
     }
 
     public boolean hit(int x0, int y0, int x1, int y1) {
+        if (x1-1 <= 0 || x1+1 >=size) {
+            return false;
+        }
+        if (y1-1 <= 0 || y1+1 >= size) {
+            return false;
+        }
         String beatingPawn = getFigure(x0, y0);
         String beatenPawn = getFigure(x1, y1);
         if (beatingPawn == "B" && beatenPawn == "W" || beatingPawn == "W" && beatenPawn == "B") {
@@ -97,16 +103,16 @@ public class Board {
                 setFigure(new Pawn("_"), x0, y0);
                 setFigure(new Pawn("_"), x1, y1);
                 setFigure(new Pawn(beatingPawn), x0 + 2, y0 + 2);
-                return true;
-            } else if (x0 - 1 == x1 && y0 + 1 == y1 && getFigure(x0 - 2, y0 + 2) == "_") {
-                setFigure(new Pawn("_"), x0, y0);
-                setFigure(new Pawn("_"), x1, y1);
-                setFigure(new Pawn(beatingPawn), x0 - 2, y0 + 2);
-                return true;
-            }
+        return true;
+        } else if (x0 - 1 == x1 && y0 + 1 == y1 && getFigure(x0 - 2, y0 + 2) == "_") {
+        setFigure(new Pawn("_"), x0, y0);
+        setFigure(new Pawn("_"), x1, y1);
+        setFigure(new Pawn(beatingPawn), x0 - 2, y0 + 2);
+        return true;
+        }
         }
         return false;
-    }
+        }
 
-}
+        }
 

@@ -19,7 +19,7 @@ public class CheckersApplication {
 		board.setFigure(black, 4, 4);
 		board.setFigure(black,4,5);
 		board.printBoard();
-		board.move(4,5,5,6);
+		board.move(7,7,8,6);
 		System.out.println();
 		board.printBoard();
 	}
