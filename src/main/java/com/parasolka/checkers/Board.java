@@ -34,4 +34,37 @@ public class Board {
         }
 
     }
+
+    public boolean move(int x0, int y0, int x1, int y1) {
+        String p = getFigure(x0, y0);
+        if (checkMove(x0, y0, x1, y1) == false) {
+            return false;
+        }
+        //String p=getFigure(x0,y0);
+        setFigure(new Pawn("_"), x0, y0);
+        setFigure(new Pawn(p), x1, y1);
+        return true;
+    }
+
+    public boolean checkMove(int x0, int y0, int x1, int y1) {
+        if (getFigure(x1, y1) != "_") {
+            return false;
+        }
+        if (getFigure(x0, y0) == "W") {
+            if ((x0 + 1 == x1 && y0 - 1 == y1) || (x0 - 1 == x1 && y0 - 1 == y1)) {
+                return true;
+            } else {
+                return false;
+            }
+        } else if (getFigure(x0, y0) == "B") {
+            if ((x0 + 1 == x1 && y0 + 1 == y1) || (x0 - 1 == x1 && y0 + 1 == y1)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        return false;
+    }
 }
+
