@@ -1,13 +1,13 @@
 package com.parasolka.checkers;
 
-public class Pawn {
-    String color;
+public class Pawn extends Figure {
 
-    public Pawn(String color) {
-        this.color = color;
+    public Pawn(String color){
+        super(color);
     }
 
-    public String getPawn() {
+    @Override
+    public String getColor() {
         return this.color;
     }
 }
