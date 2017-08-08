@@ -1,6 +1,5 @@
 package com.parasolka.checkers;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Board {
@@ -11,9 +10,9 @@ public class Board {
         return board.get(y).get(x);
     }
 
-    public void setFigure(Figure figure,int x, int y) {
+    public void setFigure(Figure figure, int x, int y) {
 
-        board.get(y).set(x,figure);
+        board.get(y).set(x, figure);
     }
 
     public Board(int size) {
@@ -31,7 +30,7 @@ public class Board {
     public void printBoard() {
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                System.out.print(" " + getFigure(j, i).getColor()+" ");
+                System.out.print(" " + getFigure(j, i).getColor() + " ");
             }
             System.out.println();
         }
@@ -44,12 +43,17 @@ public class Board {
             return false;
         }
         if (getFigure(x1, y1).getColor() != "_") {
+            //todo:make hit great again (for pawn and queen)
             return hit(x0, y0, x1, y1);
         } else {
             //String p=getFigure(x0,y0);
             setFigure(new EmptyTile(), x0, y0);
             setFigure(new Pawn(p), x1, y1);
             return true;
+        }
+        if(getFigure(x1,size-1).getColor() =="w"){
+            //todo: change Pawn to Queen
+            return false;
         }
     }
 
@@ -61,22 +65,47 @@ public class Board {
         if (y1 < 0 || y1 > size) {
             return false;
         }
+        boolean checkPawn = checkMovePawn(x0, y0, x1, y1);
+        boolean checkQueen = checkMoveQueen(x0, y0, x1, y1);
+
+        if (checkPawn == true && checkQueen == false) {
+            return true;
+        } else if (checkPawn == false && checkQueen == true) {
+            return true;
+        } else if(checkPawn == false && checkQueen == false){
+            return false;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean checkMovePawn(int x0, int y0, int x1, int y1) {
         //White goes up
-        if (getFigure(x0, y0).getColor() == "W") {
+        if (getFigure(x0, y0).getColor() == "w") {
             if ((x0 + 1 == x1 && y0 - 1 == y1) || (x0 - 1 == x1 && y0 - 1 == y1)) {
                 return true;
             } else {
                 return false;
             }
             //Black goes down
-        } else if (getFigure(x0, y0).getColor() == "B") {
+        } else if (getFigure(x0, y0).getColor() == "b") {
             if ((x0 + 1 == x1 && y0 + 1 == y1) || (x0 - 1 == x1 && y0 + 1 == y1)) {
                 return true;
             } else {
                 return false;
             }
         }
+        return false;
+    }
 
+    public boolean checkMoveQueen(int x0, int y0, int x1, int y1) {
+        if (getFigure(x0, y0).getColor() == "W" || getFigure(x0, y0).getColor() == "B") {
+            if (Math.abs(x1 - x0) == Math.abs(y1 - y0)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
         return false;
     }
 
